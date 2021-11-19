@@ -105,17 +105,39 @@ function addPagination(list) {
 
 //serchByName an event listener function
 
+function searchByName(inputValue, students) {
+  let newStudents = [];
+  for (let i = 0; i < students.length; i++) {
+    let studentFullName = "";
+    for (let prop in students[i].name) {
+      studentFullName += students[i].name[prop] += " ";
+      if (studentFullName.toLowerCase().includes(inputValue.toLowerCase())) {
+        newStudents.push(students[i]);
+      }
+      /*
+      console.log(
+        studentFullName.toLowerCase().includes(inputValue.toLowerCase())
+      );
+       */
+    }
+  }
+  showPage(newStudents, 1);
+  addPagination(newStudents);
+}
+
 let searchStr = "";
 //event for clicking the button
 btnSearch.addEventListener("click", (e) => {
   //set the searchSring to the input value
   searchStr = inputSearch.value;
+  searchByName(searchStr, data);
 });
 
 //event for keypress the input field
 inputSearch.addEventListener("keyup", (e) => {
   //set the current searchStr to the current input value
   searchStr = e.target.value;
+  searchByName(searchStr, data);
 });
 searchStr = "";
 // Call functions
