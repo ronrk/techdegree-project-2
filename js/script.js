@@ -87,7 +87,7 @@ function addPagination(list) {
   }
 
   //declare a varible to hold the currentButton that display and set it to the firschild of the list(first page)
-  let currentButton = ULLinkList.firstChild.firstChild;
+  let currentButton = ULLinkList.firstChild?.firstChild;
   currentButton.className = "active";
   ULLinkList.addEventListener("click", (e) => {
     if (e.target.type === "button") {
@@ -106,23 +106,34 @@ function addPagination(list) {
 //serchByName an event listener function
 
 function searchByName(inputValue, students) {
+  //set new empty array
   let newStudents = [];
   for (let i = 0; i < students.length; i++) {
-    let studentFullName = "";
-    for (let prop in students[i].name) {
-      studentFullName += students[i].name[prop] += " ";
-      if (studentFullName.toLowerCase().includes(inputValue.toLowerCase())) {
-        newStudents.push(students[i]);
-      }
-      /*
-      console.log(
-        studentFullName.toLowerCase().includes(inputValue.toLowerCase())
-      );
-       */
+    //set current student variable to hold the current student iteration
+    let currentStudent = students[i];
+    if (
+      currentStudent.name.first
+        .toLowerCase()
+        .includes(inputValue.toLowerCase()) ||
+      currentStudent.name.last.toLowerCase().includes(inputValue.toLowerCase())
+    ) {
+      //if the search input matches to one of the name of current student, adding current student to new array
+      newStudents.push(currentStudent);
+      addPagination(newStudents);
+    }
+    //here my programm for the error message if there's no match(Not Working)
+    if (
+      !currentStudent.name.first
+        .toLowerCase()
+        .includes(inputValue.toLowerCase()) ||
+      !currentStudent.name.last.toLowerCase().includes(inputValue.toLowerCase())
+    ) {
+      let errorMessage = document.createElement("h2");
+      errorMessage.innerHTML = `No Match`;
+      ULStudentList.append(errorMessage);
     }
   }
   showPage(newStudents, 1);
-  addPagination(newStudents);
 }
 
 let searchStr = "";
