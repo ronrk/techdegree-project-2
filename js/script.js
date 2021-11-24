@@ -67,7 +67,7 @@ function showPage(list, page) {
     }
   } else {
     let errorMessage = document.createElement("h2");
-    errorMessage.innerHTML = `No Match`;
+    errorMessage.innerHTML = `No results found`;
     ULStudentList.append(errorMessage);
   }
   //loop the student list
